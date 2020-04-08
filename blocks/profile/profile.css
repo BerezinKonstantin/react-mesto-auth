@@ -1,0 +1,13 @@
+@import url(./__avatar/profile__avatar.css);
+@import url(./__description/profile__description.css);
+@import url(./__info/profile__info.css);
+@import url(./__name/profile__name.css);
+@import url(./__info-shell/profile__info-shell.css);
+.profile {
+  display: flex;
+  max-width: 882px;
+  margin: 40px auto 51px;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}

@@ -1,0 +1,6 @@
+.card__picture {
+  max-width: 282px;
+  height: auto;
+  border-radius: 10px 10px 0 0;
+  background-size: cover;
+}
