@@ -1,8 +1,16 @@
-.like-button{
-    display: flex;
-    align-self: center;
-    width: 21px;
-    height: 18px;
-    margin: 0 21px 0 auto;
-    padding: 0;
+.like-button {
+  display: flex;
+  align-self: center;
+  width: 21px;
+  height: 18px;
+  margin: 0 21px 0 auto;
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  background-image: url(../../pictures/like.svg);
+}
+.like-button:hover {
+  opacity: 0.6;
+  transition: linear 0.2s;
+  cursor: pointer;
 }

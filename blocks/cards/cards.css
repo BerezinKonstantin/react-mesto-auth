@@ -5,3 +5,13 @@
   grid-template-columns: repeat(auto-fit, 282px);
   grid-gap: 18px;
 }
+@media (max-width: 920px) {
+  .cards {
+    max-width: 582px;
+  }
+}
+@media (max-width: 600px) {
+  .cards {
+    max-width: 282px;
+  }
+}

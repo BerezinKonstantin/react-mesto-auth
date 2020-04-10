@@ -11,3 +11,13 @@
   justify-content: flex-start;
   align-items: center;
 }
+@media (max-width: 920px) {
+  .profile {
+    max-width: 90vw;
+  }
+}
+@media (max-width: 770px) {
+  .profile {
+    flex-direction: column;
+  }
+}

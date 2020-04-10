@@ -1,9 +1,9 @@
-.card__title {
+.popup__title {
+  display: block;
   color: black;
   font-style: normal;
   font-weight: 900;
   font-size: 24px;
   line-height: 29px;
-  margin: 25px auto 31px 21px;
-  text-overflow: ellipsis;
+  margin: 34px auto 24px;
 }

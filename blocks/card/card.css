@@ -1,10 +1,10 @@
 @import url(./__title/card__title.css);
 @import url(./__picture/card__picture.css);
-.card{
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 282px;
-    height: auto;
-    border-radius: 10px;
-    background-color: white;
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 282px;
+  height: auto;
+  border-radius: 10px;
+  background-color: white;
 }
