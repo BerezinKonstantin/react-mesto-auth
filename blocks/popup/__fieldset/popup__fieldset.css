@@ -1,5 +1,6 @@
 .popup__fieldset {
   display: flex;
+  flex-wrap: wrap;
   margin: 0 auto;
   padding: 0 0 48px;
   border: 0;
