@@ -8,3 +8,8 @@
   margin: 0 auto;
   padding: 45px 0 0;
 }
+@media (max-width: 425px) {
+  .page {
+    padding: 28px 0 0;
+  }
+}

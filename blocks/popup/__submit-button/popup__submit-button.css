@@ -12,7 +12,7 @@
   border: none;
 }
 .popup__submit-button:hover {
-  opacity: 0.8;
+  background: rgba(0, 0, 0, 0.8);
   transition: linear 0.2s;
   cursor: pointer;
 }

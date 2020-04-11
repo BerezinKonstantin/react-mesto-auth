@@ -8,31 +8,6 @@
   </head>
   <body>
     <div class="page">
-      <section class="popup">
-        <form class="popup__content" action="#" method="POST">
-          <button class="popup__close-button" type="button"></button>
-          <h2 class="popup__title">Редактировать профиль</h2>
-          <fieldset class="popup__fieldset">
-            <input
-              class="popup__input popup__input_name"
-              type="text"
-              name="name"
-              value="Жак Ив-Кусто"
-              required
-            />
-            <input
-              class="popup__input popup__input_description"
-              type="text"
-              name="description"
-              value="Исследователь океана"
-              required
-            />
-          </fieldset>
-          <button class="popup__submit-button" type="submit" value="Сохранить">
-            Сохранить
-          </button>
-        </form>
-      </section>
       <header class="header">
         <img class="logo" src="pictures/logo.svg" alt="Логотип" />
       </header>
@@ -46,11 +21,11 @@
           <div class="profile__info">
             <div class="profile__info-shell">
               <h1 class="profile__name">Жак Ив-Кусто</h1>
-              <button class="edit-button" type="button"></button>
+              <button class="profile__edit-button" type="button"></button>
             </div>
             <p class="profile__description">Исследователь океана</p>
           </div>
-          <button class="add-button" type="button"></button>
+          <button class="profile__add-button" type="button"></button>
         </section>
         <section class="cards">
           <div class="card">
@@ -60,7 +35,7 @@
               alt="Палатка фастфуда"
             />
             <h2 class="card__title">Нью-Йорк</h2>
-            <button class="like-button" type="button"></button>
+            <button class="card__like-button" type="button"></button>
           </div>
           <div class="card">
             <img
@@ -69,7 +44,7 @@
               alt="Человек идущий по полевой дороге"
             />
             <h2 class="card__title">Алтай</h2>
-            <button class="like-button" type="button"></button>
+            <button class="card__like-button" type="button"></button>
           </div>
           <div class="card">
             <img
@@ -78,7 +53,7 @@
               alt="Старинное здание"
             />
             <h2 class="card__title">Брюгге</h2>
-            <button class="like-button" type="button"></button>
+            <button class="card__like-button" type="button"></button>
           </div>
           <div class="card">
             <img
@@ -87,7 +62,7 @@
               alt="Красная площадь"
             />
             <h2 class="card__title">Москва</h2>
-            <button class="like-button" type="button"></button>
+            <button class="card__like-button" type="button"></button>
           </div>
           <div class="card">
             <img
@@ -96,7 +71,7 @@
               alt="Театр оперы и балета"
             />
             <h2 class="card__title">Новосибирск</h2>
-            <button class="like-button" type="button"></button>
+            <button class="card__like-button" type="button"></button>
           </div>
           <div class="card">
             <img
@@ -105,14 +80,41 @@
               alt="Мечеть Кул Шариф"
             />
             <h2 class="card__title">Казань</h2>
-            <button class="like-button" type="button"></button>
+            <button class="card__like-button" type="button"></button>
           </div>
         </section>
       </main>
       <footer class="footer">
-        <p class="footer__copyright">&copy;2020 Березин Константин</p>
+        <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </footer>
+      <section class="popup">
+        <form class="popup__content" action="#" method="POST">
+          <button class="popup__close-button" type="button"></button>
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <fieldset class="popup__fieldset">
+            <input
+              class="popup__input popup__input_name"
+              type="text"
+              name="name"
+              value="Жак Ив-Кусто"
+              required
+              placeholder="Имя"
+            />
+            <input
+              class="popup__input popup__input_description"
+              type="text"
+              name="description"
+              value="Исследователь океана"
+              required
+              placeholder="О себе"
+            />
+          </fieldset>
+          <button class="popup__submit-button" type="submit" value="Сохранить">
+            Сохранить
+          </button>
+        </form>
+      </section>
     </div>
-    <script src="script.js"></script>
+    <script src="scripts/script.js"></script>
   </body>
 </html>
