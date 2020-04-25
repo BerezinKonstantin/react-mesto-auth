@@ -27,68 +27,14 @@
           </div>
           <button class="profile__add-button" type="button"></button>
         </section>
-        <section class="cards">
-          <div class="card">
-            <img
-              class="card__picture"
-              src="pictures/new-york.jpg"
-              alt="Палатка фастфуда"
-            />
-            <h2 class="card__title">Нью-Йорк</h2>
-            <button class="card__like-button" type="button"></button>
-          </div>
-          <div class="card">
-            <img
-              class="card__picture"
-              src="pictures/altay.jpg"
-              alt="Человек идущий по полевой дороге"
-            />
-            <h2 class="card__title">Алтай</h2>
-            <button class="card__like-button" type="button"></button>
-          </div>
-          <div class="card">
-            <img
-              class="card__picture"
-              src="pictures/brugge.jpg"
-              alt="Старинное здание"
-            />
-            <h2 class="card__title">Брюгге</h2>
-            <button class="card__like-button" type="button"></button>
-          </div>
-          <div class="card">
-            <img
-              class="card__picture"
-              src="pictures/msk.jpg"
-              alt="Красная площадь"
-            />
-            <h2 class="card__title">Москва</h2>
-            <button class="card__like-button" type="button"></button>
-          </div>
-          <div class="card">
-            <img
-              class="card__picture"
-              src="pictures/nsk.jpg"
-              alt="Театр оперы и балета"
-            />
-            <h2 class="card__title">Новосибирск</h2>
-            <button class="card__like-button" type="button"></button>
-          </div>
-          <div class="card">
-            <img
-              class="card__picture"
-              src="pictures/kazan.jpg"
-              alt="Мечеть Кул Шариф"
-            />
-            <h2 class="card__title">Казань</h2>
-            <button class="card__like-button" type="button"></button>
-          </div>
-        </section>
+        <section class="cards"></section>
       </main>
       <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </footer>
       <template id="popup-form">
-        <section class="popup popup_opened"><!--delete _opened-->
+        <section class="popup popup_opened">
+          <!--delete _opened-->
           <form class="popup__content" action="#" method="POST">
             <button class="popup__close-button" type="button"></button>
             <h2 class="popup__title"></h2>
@@ -117,6 +63,14 @@
             ></button>
           </form>
         </section>
+      </template>
+      <template id="card">
+        <div class="card">
+          <img class="card__picture" src="" alt=" " />
+          <h2 class="card__title"></h2>
+          <button class="card__like-button" type="button"></button>
+          <button class="card__delete-button" type="button"></button>
+        </div>
       </template>
     </div>
     <script src="scripts/script.js"></script>

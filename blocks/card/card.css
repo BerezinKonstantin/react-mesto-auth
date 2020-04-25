@@ -1,6 +1,8 @@
 @import url(./__title/card__title.css);
 @import url(./__picture/card__picture.css);
 @import url(./__like-button/card__like-button.css);
+@import url(./__like-button/card__like-button_active.css);
+@import url(./__delete-button/card__delete-button.css);
 .card {
   display: flex;
   flex-wrap: wrap;
@@ -8,4 +10,5 @@
   height: auto;
   border-radius: 10px;
   background-color: white;
+  position: relative;
 }
