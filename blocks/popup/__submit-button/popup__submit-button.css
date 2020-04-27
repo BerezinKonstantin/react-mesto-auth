@@ -16,8 +16,12 @@
   transition: linear 0.2s;
   cursor: pointer;
 }
-@media (max-width: 375px) {
+@media (max-width: 573px) {
   .popup__submit-button {
-    width: 90vw;
+    width: 83%;
+    margin: 0 auto 30px;
+    font-size: 14px;
+    line-height: 17px;
+    height: 40px;
   }
 }

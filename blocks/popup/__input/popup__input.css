@@ -1,6 +1,6 @@
 .popup__input {
   display: flex;
-  margin: 30px auto 0;
+  margin: 30px 0 0;
   min-width: 358px;
   min-height: 27px;
   border: none;
@@ -11,8 +11,12 @@
   font-size: 14px;
   line-height: 17px;
 }
-@media (max-width: 375px) {
+@media (max-width: 573px) {
   .popup__input {
-    min-width: 90vw;
+    min-width: 100%;
+    min-height: 24px;
+    margin: 20px 0 0;
+    font-size: 12px;
+    line-height: 15px;
   }
 }

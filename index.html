@@ -32,37 +32,31 @@
       <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </footer>
+      <section class="popup"></section>
       <template id="popup-form">
-        <section class="popup popup_opened">
-          <!--delete _opened-->
-          <form class="popup__content" action="#" method="POST">
-            <button class="popup__close-button" type="button"></button>
-            <h2 class="popup__title"></h2>
-            <fieldset class="popup__fieldset">
-              <input
-                class="popup__input popup__input_first"
-                type="text"
-                name=""
-                value=""
-                required
-                placeholder=""
-              />
-              <input
-                class="popup__input popup__input_second"
-                type="text"
-                name=""
-                value=""
-                required
-                placeholder=""
-              />
-            </fieldset>
-            <button
-              class="popup__submit-button"
-              type="submit"
+        <form class="popup__content" action="#" method="POST">
+          <button class="popup__close-button" type="button"></button>
+          <h2 class="popup__title"></h2>
+          <fieldset class="popup__fieldset">
+            <input
+              class="popup__input popup__input_first"
+              type="text"
+              name=""
               value=""
-            ></button>
-          </form>
-        </section>
+              required
+              placeholder=""
+            />
+            <input
+              class="popup__input popup__input_second"
+              type="text"
+              name=""
+              value=""
+              required
+              placeholder=""
+            />
+          </fieldset>
+          <button class="popup__submit-button" type="submit" value=""></button>
+        </form>
       </template>
       <template id="card">
         <div class="card">
@@ -70,6 +64,13 @@
           <h2 class="card__title"></h2>
           <button class="card__like-button" type="button"></button>
           <button class="card__delete-button" type="button"></button>
+        </div>
+      </template>
+      <template id="img-popup">
+        <div class="popup__img-wrapper">
+          <img class="popup__image" src="" alt="Фото места" />
+          <p class="popup__img-title"></p>
+          <button class="popup__close-button"></button>
         </div>
       </template>
     </div>

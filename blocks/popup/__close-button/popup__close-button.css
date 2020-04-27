@@ -14,8 +14,3 @@
   transition: linear 0.2s;
   cursor: pointer;
 }
-@media (max-width: 510px) {
-  .popup__close-button {
-    right: 0px;
-  }
-}
