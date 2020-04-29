@@ -32,45 +32,69 @@
       <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </footer>
-      <section class="popup"></section>
-      <template id="popup-form">
+      <section class="popup popup_for_edit">
         <form class="popup__content" action="#" method="POST">
           <button class="popup__close-button" type="button"></button>
-          <h2 class="popup__title"></h2>
+          <h2 class="popup__title">Редактировать профиль</h2>
           <fieldset class="popup__fieldset">
             <input
-              class="popup__input popup__input_first"
+              class="popup__input popup__input_name"
               type="text"
-              name=""
-              value=""
+              name="name"
+              value="Жак Ив-Кусто"
               required
-              placeholder=""
+              placeholder="Имя"
             />
             <input
-              class="popup__input popup__input_second"
+              class="popup__input popup__input_description"
               type="text"
-              name=""
-              value=""
+              name="description"
+              value="Исследователь океана"
               required
-              placeholder=""
+              placeholder="О себе"
             />
           </fieldset>
-          <button class="popup__submit-button" type="submit" value=""></button>
+          <button class="popup__submit-button" type="submit" value="">Сохранить</button>
         </form>
-      </template>
-      <template id="card">
-        <div class="card">
-          <img class="card__picture" src="" alt=" " />
-          <h2 class="card__title"></h2>
-          <button class="card__like-button" type="button"></button>
-          <button class="card__delete-button" type="button"></button>
-        </div>
-      </template>
-      <template id="img-popup">
+      </section>
+      <section class="popup popup_for_add-card">
+        <form class="popup__content" action="#" method="POST">
+          <button class="popup__close-button" type="button"></button>
+          <h2 class="popup__title">Новое место</h2>
+          <fieldset class="popup__fieldset">
+            <input
+              class="popup__input popup__input_place-name"
+              type="text"
+              name="place_name"
+              value=""
+              required
+              placeholder="Название"
+            />
+            <input
+              class="popup__input popup__input_img-src"
+              type="url"
+              name="img_src"
+              value=""
+              required
+              placeholder="Ссылка на картинку"
+            />
+          </fieldset>
+          <button class="popup__submit-button" type="submit" value="">Создать</button>
+        </form>
+      </section>
+      <section class="popup popup_for_image">
         <div class="popup__img-wrapper">
           <img class="popup__image" src="" alt="Фото места" />
           <p class="popup__img-title"></p>
           <button class="popup__close-button"></button>
+        </div> 
+      </section>
+      <template id="card">
+        <div class="card">
+          <img class="card__picture" src="" alt="Фото места" />
+          <h2 class="card__title"></h2>
+          <button class="card__like-button" type="button"></button>
+          <button class="card__delete-button" type="button"></button>
         </div>
       </template>
     </div>
