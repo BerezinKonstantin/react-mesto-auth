@@ -19,6 +19,8 @@ const formElementAddCard = document.querySelector(
 );
 const popupForImage = document.querySelector(".popup_for_image");
 const cardTemplate = document.querySelector("#card").content;
+const popupImgTitle = document.querySelector(".popup__img-title");
+const popupImage = document.querySelector(".popup__image");
 //Массив начальных карточек
 const initialCards = [
   { name: "Нью-Йорк", link: "pictures/new-york.jpg" },
@@ -38,16 +40,12 @@ function openPopupForEdit() {
   dscrInput.value = profileDescription.textContent;
   openAndClosePopup(popupForEdit);
 }
-//Функция открытия popup for card
-function openPopupAddCard() {
-  openAndClosePopup(popupAddCard);
-}
 //Функция открытия popup с картинкой
 function openPopupForImage(evt) {
+  popupImgTitle.textContent = evt.target.alt;
+  popupImage.src = evt.target.src;
+  popupImage.alt = evt.target.alt;
   openAndClosePopup(popupForImage);
-  popupForImage.querySelector(".popup__img-title").textContent =
-    evt.target.nextElementSibling.textContent;
-  popupForImage.querySelector(".popup__image").src = evt.target.src;
 }
 // Обработчик лайка
 function handleLike(evt) {
@@ -64,7 +62,7 @@ function handleDeleteCard(evt) {
     .removeEventListener("click", handleDeleteCard);
   deletedCard
     .querySelector(".card__picture")
-    .removeEventListener("click", openPopupForImage);  
+    .removeEventListener("click", openPopupForImage);
   deletedCard.remove();
 }
 // Устанавливаем слушатели событий для карточек
@@ -84,12 +82,17 @@ function handleCloseForm(evt) {
   openAndClosePopup(evt.target.closest(".popup"));
 }
 //Сборка карточки
-function getCard(element) {
+function setCard(element) {
   const cardElement = cardTemplate.cloneNode(true);
   cardElement.querySelector(".card__title").textContent = element.name;
   cardElement.querySelector(".card__picture").src = element.link;
+  cardElement.querySelector(".card__picture").alt = element.name;
   setListnersForCard(cardElement);
-  cards.prepend(cardElement);
+  return cardElement
+}
+//Добавление карточки в разметку
+function getCard(element) {
+  cards.prepend(setCard(element));
 }
 // функция открытия 6 начальных карточек из template и массива
 function getInitialCards() {
@@ -100,10 +103,8 @@ function getInitialCards() {
 //Функция отправки формы создания карточки
 function getNewCard(event) {
   event.preventDefault();
-  const newCard = [{ name: placeInput.value, link: imgSrcInput.value }];
-  for (let el = 0; el < 1; el += 1) {
-    getCard(newCard[el]);
-  }
+  const newCard = { name: placeInput.value, link: imgSrcInput.value };
+  getCard(newCard)
   openAndClosePopup(popupAddCard);
 }
 //Функция отправки формы редактирования
@@ -114,7 +115,7 @@ function setProfileInfo(event) {
   openAndClosePopup(popupForEdit);
 }
 // Слушатели
-addButton.addEventListener("click", openPopupAddCard);
+addButton.addEventListener("click", () => openAndClosePopup(popupAddCard));
 editButton.addEventListener("click", openPopupForEdit);
 closeButton.forEach((element) =>
   element.addEventListener("click", handleCloseForm)
