@@ -120,7 +120,7 @@ editButton.addEventListener("click", openPopupForEdit);
 closeButton.forEach((element) =>
   element.addEventListener("click", handleCloseForm)
 );
-formElementAddCard.addEventListener("submit", getNewCard);
-formElementEdit.addEventListener("submit", setProfileInfo);
+//formElementAddCard.addEventListener("submit", getNewCard);
+//formElementEdit.addEventListener("submit", setProfileInfo);
 
 getInitialCards();
