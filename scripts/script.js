@@ -30,8 +30,25 @@ const initialCards = [
   { name: "Новосибирск", link: "pictures/nsk.jpg" },
   { name: "Казань", link: "pictures/kazan.jpg" },
 ];
-//Функция открытия popup
+//Функция закрытия попапа по ESC
+function setListenerEscClose() {
+  if (event.key === 'Escape') {
+    const closingElement = document.querySelector(".popup_opened")
+       closingElement.classList.remove("popup_opened");
+  }
+}
+//Метод навески и удаления слушателя закрытия по ESC
+function handleListenerEscClose(element) {
+  if (!element.classList.contains("popup_opened")) {
+    document.addEventListener("keyup", setListenerEscClose);
+  }
+  if (element.classList.contains("popup_opened")) {
+    document.removeEventListener("keyup", setListenerEscClose);
+  }
+}
+//Функция открытия-закрытия popup
 function openAndClosePopup(element) {
+  handleListenerEscClose(element);
   element.classList.toggle("popup_opened");
 }
 //Функция удаления ошибок с инпутов (при залипании)
@@ -42,7 +59,9 @@ function clearInputs(popupForm) {
       el.classList.remove("popup__input_type_error");
     }
   });
-  const errorTexts = Array.from(popupForm.querySelectorAll(".popup__input-error-text"));
+  const errorTexts = Array.from(
+    popupForm.querySelectorAll(".popup__input-error-text")
+  );
   errorTexts.forEach((el) => {
     if (el.classList.contains("popup__input-error-text_active")) {
       el.classList.remove("popup__input-error-text_active");
@@ -135,7 +154,6 @@ function setProfileInfo(event) {
   profileDescription.textContent = dscrInput.value;
   openAndClosePopup(popupForEdit);
 }
-
 // Слушатели
 addButton.addEventListener("click", openPopupAddCard);
 editButton.addEventListener("click", openPopupForEdit);

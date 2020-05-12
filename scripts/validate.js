@@ -1,3 +1,4 @@
+//Функция показа ошибки для инпута
 const showInputError = (
   formElement,
   inputElement,
@@ -9,6 +10,7 @@ const showInputError = (
   errorElement.textContent = errorMessage;
   errorElement.classList.add(errorClass);
 };
+//Функция скрытия ошибки для инпута
 const hideInputError = (
   formElement,
   inputElement,
@@ -19,7 +21,7 @@ const hideInputError = (
   errorElement.textContent = "";
   errorElement.classList.remove(errorClass);
 };
-
+//Функция проверки инпута на валидность. Скрывает или показывает ошибки для инпутов
 const checkInputValidity = (formElement, inputElement, { ...rest }) => {
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage, {
@@ -29,11 +31,13 @@ const checkInputValidity = (formElement, inputElement, { ...rest }) => {
     hideInputError(formElement, inputElement, { ...rest });
   }
 };
+//Метод проверки на НЕвалидность
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   });
 };
+//Функция переключения кнопки сабмита, в зависимости от валидности. Получает как параметр метод проверки на НЕвалидность
 const toggleButtonState = (
   inputList,
   buttonElement,
@@ -45,13 +49,18 @@ const toggleButtonState = (
     buttonElement.classList.remove(inactiveButtonClass);
   }
 };
+//Функция слушателей проверки валидности инпутов.
 const setEventListeners = (
   formElement,
   { inputSelector, submitButtonSelector, ...rest }
 ) => {
+  //Находим инпуты
   const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+  //Находим кнопку сабмита
   const buttonElement = formElement.querySelector(submitButtonSelector);
+  //Переключаем состояние кнопки в зависимости от валидности
   toggleButtonState(inputList, buttonElement, { ...rest });
+  //Навешиваем на инпуты слушатели проверки валидности и переключателя состояния кнопки
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", function () {
       checkInputValidity(formElement, inputElement, { ...rest });
@@ -59,6 +68,7 @@ const setEventListeners = (
     });
   });
 };
+//Функция валидации. Находит все формы, вешает на них слушатели сабмитов и setEventListeners
 const enableValidation = ({ formSelector, ...rest }) => {
   const formList = Array.from(document.querySelectorAll(formSelector));
   formList.forEach((formElement) => {
