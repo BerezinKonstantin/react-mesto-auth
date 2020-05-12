@@ -34,11 +34,32 @@ const initialCards = [
 function openAndClosePopup(element) {
   element.classList.toggle("popup_opened");
 }
-//Функция открытия popup for edit
+//Функция удаления ошибок с инпутов (при залипании)
+function clearInputs(popupForm) {
+  const inputs = Array.from(popupForm.querySelectorAll(".popup__input"));
+  inputs.forEach((el) => {
+    if (el.classList.contains("popup__input_type_error")) {
+      el.classList.remove("popup__input_type_error");
+    }
+  });
+  const errorTexts = Array.from(popupForm.querySelectorAll(".popup__input-error-text"));
+  errorTexts.forEach((el) => {
+    if (el.classList.contains("popup__input-error-text_active")) {
+      el.classList.remove("popup__input-error-text_active");
+    }
+  });
+}
+//Функция открытия попапа для редактирования профиля
 function openPopupForEdit() {
   nameInput.value = profileName.textContent;
   dscrInput.value = profileDescription.textContent;
+  clearInputs(popupForEdit);
   openAndClosePopup(popupForEdit);
+}
+//Функция открытия попапа для создания карточки
+function openPopupAddCard() {
+  clearInputs(popupAddCard);
+  openAndClosePopup(popupAddCard);
 }
 //Функция открытия popup с картинкой
 function openPopupForImage(evt) {
@@ -88,7 +109,7 @@ function setCard(element) {
   cardElement.querySelector(".card__picture").src = element.link;
   cardElement.querySelector(".card__picture").alt = element.name;
   setListnersForCard(cardElement);
-  return cardElement
+  return cardElement;
 }
 //Добавление карточки в разметку
 function getCard(element) {
@@ -104,7 +125,7 @@ function getInitialCards() {
 function getNewCard(event) {
   event.preventDefault();
   const newCard = { name: placeInput.value, link: imgSrcInput.value };
-  getCard(newCard)
+  getCard(newCard);
   openAndClosePopup(popupAddCard);
 }
 //Функция отправки формы редактирования
@@ -114,13 +135,14 @@ function setProfileInfo(event) {
   profileDescription.textContent = dscrInput.value;
   openAndClosePopup(popupForEdit);
 }
+
 // Слушатели
-addButton.addEventListener("click", () => openAndClosePopup(popupAddCard));
+addButton.addEventListener("click", openPopupAddCard);
 editButton.addEventListener("click", openPopupForEdit);
 closeButton.forEach((element) =>
   element.addEventListener("click", handleCloseForm)
 );
-//formElementAddCard.addEventListener("submit", getNewCard);
-//formElementEdit.addEventListener("submit", setProfileInfo);
+formElementAddCard.addEventListener("submit", getNewCard);
+formElementEdit.addEventListener("submit", setProfileInfo);
 
 getInitialCards();
