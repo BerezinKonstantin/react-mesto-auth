@@ -25,3 +25,6 @@
   visibility: hidden;
   opacity: 0;
 }
+.popup:hover{
+  cursor: pointer;
+}

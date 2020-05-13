@@ -10,6 +10,9 @@
   background-color: white;
   border-radius: 10px;
 }
+.popup__content:hover{
+  cursor: auto;
+}
 @media (max-width: 573px) {
   .popup__content {
     max-width: 75vw;

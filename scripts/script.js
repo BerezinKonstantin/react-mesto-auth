@@ -32,23 +32,31 @@ const initialCards = [
 ];
 //Функция закрытия попапа по ESC
 function setListenerEscClose() {
-  if (event.key === 'Escape') {
-    const closingElement = document.querySelector(".popup_opened")
-       closingElement.classList.remove("popup_opened");
+  if (event.key === "Escape") {
+    const closingElement = document.querySelector(".popup_opened");
+    closingElement.classList.remove("popup_opened");
   }
 }
-//Метод навески и удаления слушателя закрытия по ESC
-function handleListenerEscClose(element) {
+//Функция закрытия попапа кликом по оверлею
+function setListenerClickClose() {
+  if (event.target.classList.contains("popup_opened")) {
+    event.target.classList.remove("popup_opened");
+  }
+}
+//Метод навески и удаления слушателей закрытия по ESC и оверлею
+function handleClosingListener(element) {
   if (!element.classList.contains("popup_opened")) {
     document.addEventListener("keyup", setListenerEscClose);
+    document.addEventListener("mouseup", setListenerClickClose);
   }
   if (element.classList.contains("popup_opened")) {
     document.removeEventListener("keyup", setListenerEscClose);
+    document.removeEventListener("mouseup", setListenerClickClose);
   }
 }
 //Функция открытия-закрытия popup
 function openAndClosePopup(element) {
-  handleListenerEscClose(element);
+  handleClosingListener(element);
   element.classList.toggle("popup_opened");
 }
 //Функция удаления ошибок с инпутов (при залипании)
