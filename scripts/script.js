@@ -31,14 +31,14 @@ const initialCards = [
   { name: "Казань", link: "pictures/kazan.jpg" },
 ];
 //Функция закрытия попапа по ESC
-function setListenerEscClose() {
+function setListenerEscClose(event) {
   if (event.key === "Escape") {
     const closingElement = document.querySelector(".popup_opened");
     closingElement.classList.remove("popup_opened");
   }
 }
 //Функция закрытия попапа кликом по оверлею
-function setListenerClickClose() {
+function setListenerClickClose(event) {
   if (event.target.classList.contains("popup_opened")) {
     event.target.classList.remove("popup_opened");
   }
@@ -85,6 +85,7 @@ function openPopupForEdit() {
 }
 //Функция открытия попапа для создания карточки
 function openPopupAddCard() {
+  formElementAddCard.reset();
   clearInputs(popupAddCard);
   openAndClosePopup(popupAddCard);
 }
@@ -114,7 +115,7 @@ function handleDeleteCard(evt) {
   deletedCard.remove();
 }
 // Устанавливаем слушатели событий для карточек
-function setListnersForCard(element) {
+function setListenersForCard(element) {
   element
     .querySelector(".card__like-button")
     .addEventListener("click", handleLike);
@@ -135,7 +136,7 @@ function setCard(element) {
   cardElement.querySelector(".card__title").textContent = element.name;
   cardElement.querySelector(".card__picture").src = element.link;
   cardElement.querySelector(".card__picture").alt = element.name;
-  setListnersForCard(cardElement);
+  setListenersForCard(cardElement);
   return cardElement;
 }
 //Добавление карточки в разметку
