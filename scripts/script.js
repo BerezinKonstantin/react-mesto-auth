@@ -30,6 +30,16 @@ const initialCards = [
   { name: "Новосибирск", link: "pictures/nsk.jpg" },
   { name: "Казань", link: "pictures/kazan.jpg" },
 ];
+function setListenersSubmitBtn() {
+  formElementAddCard.addEventListener("submit", getNewCard);
+  formElementEdit.addEventListener("submit", setProfileInfo);
+  console.log("set");
+}
+function deleteListenersSubmitBtn() {
+  formElementAddCard.removeEventListener("submit", getNewCard);
+  formElementEdit.removeEventListener("submit", setProfileInfo);
+  console.log("del");
+}
 //Функция закрытия попапа по ESC
 function setListenerEscClose(event) {
   if (event.key === "Escape") {
@@ -57,6 +67,7 @@ function handleClosingListener(element) {
 //Функция открытия-закрытия popup
 function openAndClosePopup(element) {
   handleClosingListener(element);
+  deleteListenersSubmitBtn();
   element.classList.toggle("popup_opened");
 }
 //Функция удаления ошибок с инпутов (при залипании)
@@ -76,17 +87,26 @@ function clearInputs(popupForm) {
     }
   });
 }
+//Отключаем кнопку при открытии попапа
+function toggleButton(popupForm, boolean) {
+  const buttonElement = popupForm.querySelector(".popup__submit-button");
+  if (boolean) {
+    buttonElement.classList.add("popup__submit-button_inactive");
+  }
+}
 //Функция открытия попапа для редактирования профиля
 function openPopupForEdit() {
   nameInput.value = profileName.textContent;
   dscrInput.value = profileDescription.textContent;
   clearInputs(popupForEdit);
+  toggleButton(popupForEdit, true);
   openAndClosePopup(popupForEdit);
 }
 //Функция открытия попапа для создания карточки
 function openPopupAddCard() {
   formElementAddCard.reset();
   clearInputs(popupAddCard);
+  toggleButton(popupAddCard, true);
   openAndClosePopup(popupAddCard);
 }
 //Функция открытия popup с картинкой
@@ -169,7 +189,5 @@ editButton.addEventListener("click", openPopupForEdit);
 closeButton.forEach((element) =>
   element.addEventListener("click", handleCloseForm)
 );
-formElementAddCard.addEventListener("submit", getNewCard);
-formElementEdit.addEventListener("submit", setProfileInfo);
 
 getInitialCards();
