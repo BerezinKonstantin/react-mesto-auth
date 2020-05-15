@@ -33,12 +33,10 @@ const initialCards = [
 function setListenersSubmitBtn() {
   formElementAddCard.addEventListener("submit", getNewCard);
   formElementEdit.addEventListener("submit", setProfileInfo);
-  console.log("set");
 }
 function deleteListenersSubmitBtn() {
   formElementAddCard.removeEventListener("submit", getNewCard);
   formElementEdit.removeEventListener("submit", setProfileInfo);
-  console.log("del");
 }
 //Функция закрытия попапа по ESC
 function setListenerEscClose(event) {
