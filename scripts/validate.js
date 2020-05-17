@@ -45,10 +45,10 @@ const toggleButtonState = (
 ) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(inactiveButtonClass);
-    deleteListenersSubmitBtn();
+    buttonElement.setAttribute("disabled", "disabled");
   } else {
     buttonElement.classList.remove(inactiveButtonClass);
-    setListenersSubmitBtn();
+    buttonElement.removeAttribute("disabled");
   }
 };
 //Функция слушателей проверки валидности инпутов.
