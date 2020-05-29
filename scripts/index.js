@@ -1,3 +1,4 @@
+import * as CardData from "./Card.js";
 //Переменные
 const cards = document.querySelector(".cards");
 const closeButton = document.querySelectorAll(".popup__close-button");
@@ -17,10 +18,7 @@ const popupAddCard = document.querySelector(".popup_for_add-card");
 const formElementAddCard = document.querySelector(
   ".popup_for_add-card .popup__content"
 );
-const popupForImage = document.querySelector(".popup_for_image");
-const cardTemplate = document.querySelector("#card").content;
-const popupImgTitle = document.querySelector(".popup__img-title");
-const popupImage = document.querySelector(".popup__image");
+
 //Массив начальных карточек
 const initialCards = [
   { name: "Нью-Йорк", link: "pictures/new-york.jpg" },
@@ -30,20 +28,20 @@ const initialCards = [
   { name: "Новосибирск", link: "pictures/nsk.jpg" },
   { name: "Казань", link: "pictures/kazan.jpg" },
 ];
-//Функция закрытия попапа по ESC
+//Функция закрытия попапа по ESC/ОСТАВИТЬ
 function setListenerEscClose(event) {
   if (event.key === "Escape") {
     const closingElement = document.querySelector(".popup_opened");
     closingElement.classList.remove("popup_opened");
   }
 }
-//Функция закрытия попапа кликом по оверлею
+//Функция закрытия попапа кликом по оверлею/ОСТАВИТЬ
 function setListenerClickClose(event) {
   if (event.target.classList.contains("popup_opened")) {
     event.target.classList.remove("popup_opened");
   }
 }
-//Метод навески и удаления слушателей закрытия по ESC и оверлею
+//Метод навески и удаления слушателей закрытия по ESC и оверлею/ОСТАВИТЬ
 function handleClosingListener(element) {
   if (!element.classList.contains("popup_opened")) {
     document.addEventListener("keyup", setListenerEscClose);
@@ -54,12 +52,13 @@ function handleClosingListener(element) {
     document.removeEventListener("mouseup", setListenerClickClose);
   }
 }
-//Функция открытия-закрытия popup
-function openAndClosePopup(element) {
+//Функция открытия-закрытия popup/ОСТАВИТЬ
+export function openAndClosePopup(element) {
   handleClosingListener(element);
   element.classList.toggle("popup_opened");
 }
-//Функция удаления ошибок с инпутов (при залипании)
+
+//Функция удаления ошибок с инпутов (при залипании)/ОСТАВИТЬ
 function clearInputs(popupForm) {
   const inputs = Array.from(popupForm.querySelectorAll(".popup__input"));
   inputs.forEach((el) => {
@@ -76,12 +75,14 @@ function clearInputs(popupForm) {
     }
   });
 }
-//Отключаем кнопку при открытии попапа
+
+
+//Отключаем кнопку при открытии попапа/ОСТАВИТЬ
 function toggleButton(popupForm) {
   const buttonElement = popupForm.querySelector(".popup__submit-button");
   buttonElement.classList.add("popup__submit-button_inactive");
 }
-//Функция открытия попапа для редактирования профиля
+//Функция открытия попапа для редактирования профиля/ОСТАВИТЬ
 function openPopupForEdit() {
   nameInput.value = profileName.textContent;
   dscrInput.value = profileDescription.textContent;
@@ -89,75 +90,32 @@ function openPopupForEdit() {
   toggleButton(popupForEdit);
   openAndClosePopup(popupForEdit);
 }
-//Функция открытия попапа для создания карточки
+//Функция открытия попапа для создания карточки/ОСТАВИТЬ
 function openPopupAddCard() {
   formElementAddCard.reset();
   clearInputs(popupAddCard);
   toggleButton(popupAddCard);
   openAndClosePopup(popupAddCard);
 }
-//Функция открытия popup с картинкой
-function openPopupForImage(evt) {
-  popupImgTitle.textContent = evt.target.alt;
-  popupImage.src = evt.target.src;
-  popupImage.alt = evt.target.alt;
-  openAndClosePopup(popupForImage);
-}
-// Обработчик лайка
-function handleLike(evt) {
-  evt.target.classList.toggle("card__like-button_active");
-}
-// Обработчик удаления карточки
-function handleDeleteCard(evt) {
-  const deletedCard = evt.target.closest(".card");
-  deletedCard
-    .querySelector(".card__like-button")
-    .removeEventListener("click", handleLike);
-  deletedCard
-    .querySelector(".card__delete-button")
-    .removeEventListener("click", handleDeleteCard);
-  deletedCard
-    .querySelector(".card__picture")
-    .removeEventListener("click", openPopupForImage);
-  deletedCard.remove();
-}
-// Устанавливаем слушатели событий для карточек
-function setListenersForCard(element) {
-  element
-    .querySelector(".card__like-button")
-    .addEventListener("click", handleLike);
-  element
-    .querySelector(".card__delete-button")
-    .addEventListener("click", handleDeleteCard);
-  element
-    .querySelector(".card__picture")
-    .addEventListener("click", openPopupForImage);
-}
+
 //Функция закрытия формы
 function handleCloseForm(evt) {
   openAndClosePopup(evt.target.closest(".popup"));
 }
-//Сборка карточки
-function setCard(element) {
-  const cardElement = cardTemplate.cloneNode(true);
-  cardElement.querySelector(".card__title").textContent = element.name;
-  cardElement.querySelector(".card__picture").src = element.link;
-  cardElement.querySelector(".card__picture").alt = element.name;
-  setListenersForCard(cardElement);
-  return cardElement;
+//Добавление карточки в html
+function getCard(item) {
+  const card = new CardData.Card(item, "#card");
+  const cardElement = card.generateCard();
+  cards.prepend(cardElement);
 }
-//Добавление карточки в разметку
-function getCard(element) {
-  cards.prepend(setCard(element));
-}
-// функция открытия 6 начальных карточек из template и массива
+// функция добавления 6 начальных карточек из template и массива
 function getInitialCards() {
-  initialCards.forEach((el) => {
-    getCard(el);
-  });
+  initialCards.forEach((item) => {
+    getCard(item)
+      });
 }
 //Функция отправки формы создания карточки
-function getNewCard(event) {
+function pullNewCard(event) {
   event.preventDefault();
   const newCard = { name: placeInput.value, link: imgSrcInput.value };
   getCard(newCard);
@@ -176,6 +134,6 @@ editButton.addEventListener("click", openPopupForEdit);
 closeButton.forEach((element) =>
   element.addEventListener("click", handleCloseForm)
 );
-formElementAddCard.addEventListener("submit", getNewCard);
+formElementAddCard.addEventListener("submit", pullNewCard);
 formElementEdit.addEventListener("submit", setProfileInfo);
 getInitialCards();
