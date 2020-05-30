@@ -33,7 +33,7 @@
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </footer>
       <section class="popup popup_for_edit">
-        <form class="popup__content" action="#" method="POST" novalidate>
+        <form id="form_for_edit" class="popup__content" action="#" method="POST" novalidate>
           <button class="popup__close-button" type="button"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
           <fieldset class="popup__fieldset">
@@ -71,7 +71,7 @@
         </form>
       </section>
       <section class="popup popup_for_add-card">
-        <form class="popup__content" action="#" method="POST" novalidate>
+        <form id="form_for_add-card" class="popup__content" action="#" method="POST" novalidate>
           <button class="popup__close-button" type="button"></button>
           <h2 class="popup__title">Новое место</h2>
           <fieldset class="popup__fieldset">
@@ -126,7 +126,6 @@
       </template>
     </div>
     <script type="module" src="scripts/index.js"></script>
-    <script type="module" src="scripts/validate.js"></script>
     <script type="module" src="scripts/Card.js"></script>
     <script type="module" src="scripts/FormValidator.js"></script>
   </body>
