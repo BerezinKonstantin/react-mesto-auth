@@ -1,5 +1,12 @@
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
+import newYork from "../pictures/new-york.jpg";
+import altay from "../pictures/new-york.jpg";
+import brugge from "../pictures/brugge.jpg";
+import msk from "../pictures/msk.jpg";
+import nsk from "../pictures/nsk.jpg";
+import kazan from "../pictures/kazan.jpg";
+import "../pages/index.css"
 //Переменные
 const cards = document.querySelector(".cards");
 const closeButton = document.querySelectorAll(".popup__close-button");
@@ -21,12 +28,12 @@ const formElementAddCard = document.querySelector(
 );
 //Массив начальных карточек
 const initialCards = [
-  { name: "Нью-Йорк", link: "pictures/new-york.jpg" },
-  { name: "Алтай", link: "pictures/altay.jpg" },
-  { name: "Брюгге", link: "pictures/brugge.jpg" },
-  { name: "Москва", link: "pictures/msk.jpg" },
-  { name: "Новосибирск", link: "pictures/nsk.jpg" },
-  { name: "Казань", link: "pictures/kazan.jpg" },
+  { name: "Нью-Йорк", link: newYork },
+  { name: "Алтай", link: altay },
+  { name: "Брюгге", link: brugge },
+  { name: "Москва", link: msk },
+  { name: "Новосибирск", link: nsk },
+  { name: "Казань", link: kazan },
 ];
 //Переменная со значениями, передаваемыми в FormValidator
 const validationData = {
