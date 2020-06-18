@@ -1,12 +1,7 @@
-import { openAndClosePopup } from "./index.js";
-//Переменные для открытия Попапа с картинкой
-const popupForImage = document.querySelector(".popup_for_image");
-const popupImgTitle = document.querySelector(".popup__img-title");
-const popupImage = document.querySelector(".popup__image");
-//Класс карточки
 export class Card {
-  constructor(item, cardSelector) {
+  constructor({ item }, handleCardClick, cardSelector) {
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
     this._link = item.link;
     this._name = item.name;
   }
@@ -27,6 +22,20 @@ export class Card {
     this._setListenersForCard();
     return this._element;
   }
+  // Получаем значения из карточки
+  _getCardValues() {
+    this._cardValues = {};
+    this._cardValues.link = this._link;
+    this._cardValues.name = this._name;
+    console.log(this._cardValues);
+    return this._cardValues;
+  }
+  // Метод лайка
+  _handleLike() {
+    this._element
+      .querySelector(".card__like-button")
+      .classList.toggle("card__like-button_active");
+  }
   //Метод навески слушателей на карточку
   _setListenersForCard() {
     this._element
@@ -42,14 +51,8 @@ export class Card {
     this._element
       .querySelector(".card__picture")
       .addEventListener("click", () => {
-        openPopupForImage(this._link, this._name);
+        this._handleCardClick(this._getCardValues());
       });
-  }
-  // Метод лайка
-  _handleLike() {
-    this._element
-      .querySelector(".card__like-button")
-      .classList.toggle("card__like-button_active");
   }
   //Метод удаления карточки и слушателей
   _handleDeleteCard() {
@@ -66,15 +69,8 @@ export class Card {
     this._element
       .querySelector(".card__picture")
       .removeEventListener("click", () => {
-        openPopupForImage();
+        this._handleCardClick();
       });
     this._element.remove();
   }
-}
-//Функция открытия попапа с картинкой
-function openPopupForImage(link, name) {
-  popupImgTitle.textContent = name;
-  popupImage.src = link;
-  popupImage.alt = name;
-  openAndClosePopup(popupForImage);
 }

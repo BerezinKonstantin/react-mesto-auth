@@ -7,7 +7,7 @@ export class FormValidator {
     this._errorClass = data.errorClass;
     this._form = form;
   }
-// Публичный метод валидирования форм - навешиваем на форму слушатели 
+  // Публичный метод валидирования форм - навешиваем на форму слушатели
   enableValidation() {
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
@@ -71,4 +71,3 @@ export class FormValidator {
     errorElement.classList.remove(this._errorClass);
   }
 }
-
