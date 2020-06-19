@@ -16,7 +16,6 @@ import "../pages/index.css";
 
 //Метод открытия Попапа по клику на карточку
 function handleCardClick(item) {
-  console.log(item);
   const popupWithImage = new PopupWithImage(".popup_for_image", { item });
   popupWithImage.open();
 }
@@ -28,24 +27,16 @@ function handleAddCardFormSubmit(item) {
 }
 //Метод отправки формы для редактирования информации
 function handleEditFormSubmit({ name, info }) {
-  const newUserInfo = new UserInfo({
-    userNameSelector: ".profile__name",
-    userInfoSelector: ".profile__description",
-  });
-  newUserInfo.getUserInfo();
-  newUserInfo.setUserInfo({ name, info });
+  userInfo.getUserInfo();
+  userInfo.setUserInfo({ name, info });
 }
-//метод добавления информации о пользователе
 const userInfo = new UserInfo({
   userNameSelector: ".profile__name",
   userInfoSelector: ".profile__description",
 });
+const popupForEdit = new PopupWithForm(".popup_for_edit", handleEditFormSubmit);
 //Функция открытия попапа для редактирования профиля
 function openPopupForEdit() {
-  const popupForEdit = new PopupWithForm(
-    ".popup_for_edit",
-    handleEditFormSubmit
-  );
   userInfo.getUserInfo();
   nameInput.value = userInfo.getUserInfo().name;
   infoInput.value = userInfo.getUserInfo().info;
@@ -53,12 +44,12 @@ function openPopupForEdit() {
   popupForEdit.toggleButton();
   popupForEdit.open();
 }
+const popupForAddCard = new PopupWithForm(
+  ".popup_for_add-card",
+  handleAddCardFormSubmit
+);
 //Функция открытия попапа для создания карточки
 function openPopupForAddCard() {
-  const popupForAddCard = new PopupWithForm(
-    ".popup_for_add-card",
-    handleAddCardFormSubmit
-  );
   popupForAddCard.clearInputsErrors();
   popupForAddCard.toggleButton();
   popupForAddCard.open();

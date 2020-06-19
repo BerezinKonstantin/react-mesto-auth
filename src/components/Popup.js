@@ -1,6 +1,7 @@
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
+    this._setEventListeners();
   }
   //Метод закрытия попапа по ESC
   _handleEscClose(event) {
@@ -11,7 +12,7 @@ export default class Popup {
   //Метод закрытия попапа кликом по оверлею
   _handleOverlayClickClose(event) {
     if (event.target.classList.contains("popup_opened")) {
-      event.target.classList.remove("popup_opened");
+      this.close();
     }
   }
   // Метод навески слушателей закрытия попапа
@@ -30,15 +31,15 @@ export default class Popup {
   }
   // Метод открытия попапа
   open() {
-    this._setEventListeners();
     this._popup.classList.add("popup_opened");
   }
   // Метод закрытия попапа
   close() {
+    this._popup.classList.remove("popup_opened");
     this._popup
       .querySelector(".popup__close-button")
       .removeEventListener("mouseup", () => {
-        this.close;
+        this.close();
       });
     document.removeEventListener("keyup", () => {
       this._handleEscClose(event);
@@ -46,6 +47,5 @@ export default class Popup {
     document.removeEventListener("mouseup", () => {
       this._handleOverlayClickClose(event);
     });
-    this._popup.classList.remove("popup_opened");
   }
 }
