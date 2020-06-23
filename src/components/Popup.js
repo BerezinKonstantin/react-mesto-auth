@@ -1,7 +1,22 @@
-import { handleEscClose, setListenerClickClose } from "../utils/utils.js";
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
+    //Метод закрытия попапа по ESC
+    this._handleEscClose = (event) => {
+      if (event.key === "Escape") {
+        document
+          .querySelector(".popup_opened")
+          .classList.remove("popup_opened");
+        document.removeEventListener("keyup", this._handleEscClose);
+      }
+    };
+    //Функция закрытия попапа кликом по оверлею
+    this._handleClickClose = (event) => {
+      if (event.target.classList.contains("popup_opened")) {
+        document.removeEventListener("keyup", this._handleEscClose);
+        event.target.classList.remove("popup_opened");
+      }
+    };
     this._handlerClose = () => {
       this.close();
     };
@@ -11,8 +26,8 @@ export default class Popup {
     this._popup
       .querySelector(".popup__close-button")
       .addEventListener("mouseup", this._handlerClose);
-    document.addEventListener("keyup", handleEscClose);
-    this._popup.addEventListener("mouseup", setListenerClickClose);
+    document.addEventListener("keyup", this._handleEscClose);
+    this._popup.addEventListener("mouseup", this._handleClickClose);
   }
   // Метод открытия попапа
   open() {
@@ -25,7 +40,7 @@ export default class Popup {
     this._popup
       .querySelector(".popup__close-button")
       .removeEventListener("mouseup", this._handlerClose);
-    document.removeEventListener("keyup", handleEscClose);
-    this._popup.removeEventListener("mouseup", setListenerClickClose);
+    document.removeEventListener("keyup", this._handleEscClose);
+    this._popup.removeEventListener("mouseup", this._handleClickClose);
   }
 }

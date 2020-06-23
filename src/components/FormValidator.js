@@ -70,4 +70,33 @@ export class FormValidator {
     errorElement.textContent = "";
     errorElement.classList.remove(this._errorClass);
   }
+  //Функция удаления ошибок с инпутов (при залипании)
+  clearInputsErrors(popupSelector) {
+    const inputs = Array.from(
+      document.querySelector(popupSelector).querySelectorAll(".popup__input")
+    );
+    inputs.forEach((element) => {
+      if (element.classList.contains("popup__input_type_error")) {
+        element.classList.remove("popup__input_type_error");
+      }
+    });
+    const errorTexts = Array.from(
+      document
+        .querySelector(popupSelector)
+        .querySelectorAll(".popup__input-error-text")
+    );
+    errorTexts.forEach((element) => {
+      if (element.classList.contains("popup__input-error-text_active")) {
+        element.classList.remove("popup__input-error-text_active");
+      }
+    });
+  }
+  //Метод Принудительного отключения кнопки при открытии попапа
+  toggleButton(popupSelector) {
+    const buttonElement = document
+      .querySelector(popupSelector)
+      .querySelector(".popup__submit-button");
+    buttonElement.classList.add("popup__submit-button_inactive");
+    buttonElement.disabled = true;
+  }
 }

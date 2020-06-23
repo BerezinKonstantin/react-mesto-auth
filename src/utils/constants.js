@@ -2,7 +2,15 @@ export const editButton = document.querySelector(".profile__edit-button");
 export const addButton = document.querySelector(".profile__add-button");
 export const nameInput = document.querySelector(".popup__input_name");
 export const infoInput = document.querySelector(".popup__input_description");
-
+export const popupForEditSelector = ".popup_for_edit";
+export const popupForAddCardSelector = ".popup_for_add-card";
+export const popupWithImageSelector = ".popup_for_image";
+export const formSelector = ".popup__content";
+export const cardsSelector = ".cards";
+export const profileNameSelector = ".profile__name";
+export const profileDscrSelector = ".profile__description";
+export const formForEdit = document.querySelector("#form_for_edit");
+export const formForAddCard = document.querySelector("#form_for_add-card");
 //Массив начальных карточек
 import newYork from "../pictures/new-york.jpg";
 import altay from "../pictures/altay.jpg";

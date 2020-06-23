@@ -11,11 +11,18 @@ import {
   infoInput,
   editButton,
   addButton,
+  popupForEditSelector,
+  popupForAddCardSelector,
+  formForEdit,
+  formForAddCard,
+  cardsSelector,
+  popupWithImageSelector,
+  profileDscrSelector,
+  profileNameSelector,
 } from "../utils/constants.js";
-import { toggleButton, clearInputsErrors } from "../utils/utils.js";
 import "./index.css";
 //Метод открытия Попапа по клику на карточку
-export const handleCardClick = (item) => {
+const handleCardClick = (item) => {
   popupWithImage.open(item);
 };
 //Метод отправки формы для добавления каротчки
@@ -26,31 +33,24 @@ function handleAddCardFormSubmit(item) {
 }
 //Метод отправки формы для редактирования информации
 function handleEditFormSubmit({ name, info }) {
-  userInfo.getUserInfo();
   userInfo.setUserInfo({ name, info });
 }
 //Функция открытия попапа для редактирования профиля
 function openPopupForEdit() {
-  userInfo.getUserInfo();
-  nameInput.value = userInfo.getUserInfo().name;
-  infoInput.value = userInfo.getUserInfo().info;
-  clearInputsErrors(".popup_for_edit");
-  toggleButton(".popup_for_edit");
+  const userInfoItem = userInfo.getUserInfo();
+  nameInput.value = userInfoItem.name;
+  infoInput.value = userInfoItem.info;
+  editFormValidator.enableValidation();
+  editFormValidator.clearInputsErrors(popupForEditSelector);
+  editFormValidator.toggleButton(popupForEditSelector);
   popupForEdit.open();
 }
 //Функция открытия попапа для создания карточки
 function openPopupForAddCard() {
-  clearInputsErrors(".popup_for_add-card");
-  toggleButton(".popup_for_add-card");
+  addCardFormValidator.enableValidation();
+  addCardFormValidator.clearInputsErrors(popupForAddCardSelector);
+  addCardFormValidator.toggleButton(popupForAddCardSelector);
   popupForAddCard.open();
-}
-// Функция валидации форм
-function getValidation() {
-  const formList = Array.from(document.querySelectorAll(".popup__content"));
-  formList.forEach((form) => {
-    const formValidator = new FormValidator(validationData, form);
-    formValidator.enableValidation();
-  });
 }
 // Метод добавления 6 начальных карточек
 const getInitialCards = new Section(
@@ -62,22 +62,26 @@ const getInitialCards = new Section(
       getInitialCards.addItem(cardElement);
     },
   },
-  ".cards"
+  cardsSelector
 );
 //Методы создания обьекта класса
+const editFormValidator = new FormValidator(validationData, formForEdit);
+const addCardFormValidator = new FormValidator(validationData, formForAddCard);
 const userInfo = new UserInfo({
-  userNameSelector: ".profile__name",
-  userInfoSelector: ".profile__description",
+  userNameSelector: profileNameSelector,
+  userInfoSelector: profileDscrSelector,
 });
-const popupWithImage = new PopupWithImage(".popup_for_image");
-const popupForEdit = new PopupWithForm(".popup_for_edit", handleEditFormSubmit);
+const popupWithImage = new PopupWithImage(popupWithImageSelector);
+const popupForEdit = new PopupWithForm(
+  popupForEditSelector,
+  handleEditFormSubmit
+);
 const popupForAddCard = new PopupWithForm(
-  ".popup_for_add-card",
+  popupForAddCardSelector,
   handleAddCardFormSubmit
 );
 // Слушатели
 addButton.addEventListener("click", openPopupForAddCard);
 editButton.addEventListener("click", openPopupForEdit);
-//Обьявдение функций
+//Обьявление функций
 getInitialCards.renderItems();
-getValidation();
