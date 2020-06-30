@@ -4,8 +4,10 @@ import { Section } from "../components/Section.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
+import { PopupForRemoveCard } from "../components/PopupForRemoveCard.js";
+import { Api } from "../components/Api.js";
 import {
-  initialCards,
+  avatar,
   validationData,
   nameInput,
   infoInput,
@@ -15,25 +17,78 @@ import {
   popupForAddCardSelector,
   formForEdit,
   formForAddCard,
+  formForEditAvatar,
   cardsSelector,
   popupWithImageSelector,
   profileDscrSelector,
   profileNameSelector,
+  popupForEditAvatarSelector,
+  popupForRemoveCardSelector,
+  editAvatarButton,
 } from "../utils/constants.js";
 import "./index.css";
+let initialCards;
+export let myId;
 //Метод открытия Попапа по клику на карточку
 const handleCardClick = (item) => {
   popupWithImage.open(item);
 };
-//Метод отправки формы для добавления каротчки
-function handleAddCardFormSubmit(item) {
-  const card = new Card({ item }, handleCardClick, "#card");
-  const cardElement = card.generateCard();
-  getInitialCards.addItem(cardElement);
-}
+const handlePopupForRemoveCardOpen = (event, _id) => {
+  const deletedCard = event.target.parentNode;
+  deletedCard._id = _id;
+  function handleRemoveCardFormSubmit(deletedItem) {
+    deletedItem.remove();
+    const deleteCardApi = new Api(
+      `https://mesto.nomoreparties.co/v1/cohort-12/cards/${deletedCard._id}`
+    );
+    deleteCardApi.delete();
+  }
+  const popupForRemoveCard = new PopupForRemoveCard(
+    popupForRemoveCardSelector,
+    deletedCard,
+    handleRemoveCardFormSubmit
+  );
+  popupForRemoveCard.open();
+};
 //Метод отправки формы для редактирования информации
 function handleEditFormSubmit({ name, info }) {
-  userInfo.setUserInfo({ name, info });
+  popupForEdit.renderLoading(true);
+  patchUserInfo(name, info).finally(() => {
+    {
+      userInfo.setUserInfo({ name, info });
+    }
+    popupForEdit.renderLoading(false);
+  });
+}
+//Метод отправки формы для добавления каротчки
+function handleAddCardFormSubmit(item) {
+  popupForAddCard.renderLoading(true);
+  const card = new Card(
+    { item },
+    handleCardClick,
+    handlePopupForRemoveCardOpen,
+    "#card"
+  );
+  const cardElement = card.generateCard();
+  initialCards.prependItem(cardElement);
+  //Отправка данных API
+  const postCardApi = new Api(
+    "https://mesto.nomoreparties.co/v1/cohort-12/cards"
+  );
+  postCardApi.post({ name: item.name, link: item.link }).then(() => {
+    popupForAddCard.renderLoading(false);
+  });
+}
+//Метод отправки аватара
+function handleAvatarFormSubmit(item) {
+  popupForEditAvatar.renderLoading(true);
+  const avatarPatchApi = new Api(
+    "https://mesto.nomoreparties.co/v1/cohort-12/users/me/avatar"
+  );
+  avatarPatchApi.patch({ avatar: item.avatar }).finally(() => {
+    popupForEditAvatar.renderLoading(false);
+  });
+  avatar.src = item.avatar;
 }
 //Функция открытия попапа для редактирования профиля
 function openPopupForEdit() {
@@ -52,26 +107,29 @@ function openPopupForAddCard() {
   addCardFormValidator.toggleButton(popupForAddCardSelector);
   popupForAddCard.open();
 }
-// Метод добавления 6 начальных карточек
-const getInitialCards = new Section(
-  {
-    items: initialCards,
-    renderer: (item) => {
-      const card = new Card({ item }, handleCardClick, "#card");
-      const cardElement = card.generateCard();
-      getInitialCards.addItem(cardElement);
-    },
-  },
-  cardsSelector
-);
-//Методы создания обьекта класса
+//Функция открытия попапа для добавления аватара
+function openPopupForEditAvatar() {
+  editAvatarFormValidator.enableValidation();
+  editAvatarFormValidator.clearInputsErrors(popupForEditAvatarSelector);
+  editAvatarFormValidator.toggleButton(popupForEditAvatarSelector);
+  popupForEditAvatar.open();
+}
+//Методы создания обьектов класса
 const editFormValidator = new FormValidator(validationData, formForEdit);
 const addCardFormValidator = new FormValidator(validationData, formForAddCard);
+const editAvatarFormValidator = new FormValidator(
+  validationData,
+  formForEditAvatar
+);
 const userInfo = new UserInfo({
   userNameSelector: profileNameSelector,
   userInfoSelector: profileDscrSelector,
 });
 const popupWithImage = new PopupWithImage(popupWithImageSelector);
+const popupForEditAvatar = new PopupWithForm(
+  popupForEditAvatarSelector,
+  handleAvatarFormSubmit
+);
 const popupForEdit = new PopupWithForm(
   popupForEditSelector,
   handleEditFormSubmit
@@ -80,8 +138,64 @@ const popupForAddCard = new PopupWithForm(
   popupForAddCardSelector,
   handleAddCardFormSubmit
 );
+// Метод получения инфо о юзере
+function getUserInfo() {
+  const getUserInfoApi = new Api(
+    "https://mesto.nomoreparties.co/v1/cohort-12/users/me"
+  );
+  return getUserInfoApi.get();
+}
+// Метод изменения инфо о юзере
+function patchUserInfo(name, info) {
+  const patchUserInfoApi = new Api(
+    "https://mesto.nomoreparties.co/v1/cohort-12/users/me"
+  );
+  return patchUserInfoApi.patch({
+    name: name,
+    about: info,
+  });
+}
+// Метод добавления 6 начальных карточек
+function getCardsApi() {
+  const cardsApi = new Api("https://mesto.nomoreparties.co/v1/cohort-12/cards");
+  return cardsApi.get();
+}
+function getCards() {
+  getCardsApi()
+    .then((result) => {
+      initialCards = new Section(
+        {
+          items: result,
+          renderer: (item) => {
+            const card = new Card(
+              { item },
+              handleCardClick,
+              handlePopupForRemoveCardOpen,
+              "#card"
+            );
+            const cardElement = card.generateCard();
+            initialCards.appendItem(cardElement);
+          },
+        },
+        cardsSelector
+      );
+      return initialCards;
+    })
+    .then((initialCards) => {
+      console.log(initialCards);
+
+      initialCards.renderItems();
+    });
+}
+//Обьявление функций
+getUserInfo().then((result) => {
+  document.querySelector(profileNameSelector).textContent = result.name;
+  document.querySelector(profileDscrSelector).textContent = result.about;
+  avatar.src = result.avatar;
+  myId = result._id;
+});
+getCards();
 // Слушатели
 addButton.addEventListener("click", openPopupForAddCard);
 editButton.addEventListener("click", openPopupForEdit);
-//Обьявление функций
-getInitialCards.renderItems();
+editAvatarButton.addEventListener("click", openPopupForEditAvatar);

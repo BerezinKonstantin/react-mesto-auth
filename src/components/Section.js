@@ -7,9 +7,14 @@ export class Section {
   renderItems() {
     this._initialArray.forEach((item) => {
       this._renderer(item);
+      console.log("render");
+      
     });
   }
-  addItem(element) {
+  appendItem(element) {
     this._container.append(element);
+  }
+  prependItem(element) {
+    this._container.prepend(element);
   }
 }

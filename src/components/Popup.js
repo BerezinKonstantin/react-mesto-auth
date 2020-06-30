@@ -1,4 +1,4 @@
-export default class Popup {
+export class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
     //Метод закрытия попапа по ESC

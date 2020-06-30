@@ -11,21 +11,11 @@ export const profileNameSelector = ".profile__name";
 export const profileDscrSelector = ".profile__description";
 export const formForEdit = document.querySelector("#form_for_edit");
 export const formForAddCard = document.querySelector("#form_for_add-card");
-//Массив начальных карточек
-import newYork from "../pictures/new-york.jpg";
-import altay from "../pictures/altay.jpg";
-import brugge from "../pictures/brugge.jpg";
-import msk from "../pictures/msk.jpg";
-import nsk from "../pictures/nsk.jpg";
-import kazan from "../pictures/kazan.jpg";
-export const initialCards = [
-  { placeName: "Нью-Йорк", imgSrc: newYork },
-  { placeName: "Алтай", imgSrc: altay },
-  { placeName: "Брюгге", imgSrc: brugge },
-  { placeName: "Москва", imgSrc: msk },
-  { placeName: "Новосибирск", imgSrc: nsk },
-  { placeName: "Казань", imgSrc: kazan },
-];
+export const formForEditAvatar = document.querySelector("#form_for_add-avatar");
+export const popupForEditAvatarSelector = ".popup_for_add-avatar"
+export const popupForRemoveCardSelector = ".popup_for_remove-card"
+export const editAvatarButton = document.querySelector(".profile__avatar-wrapper");
+export const avatar = document.querySelector(".profile__avatar");
 //Объект со значениями, передаваемыми в FormValidator
 export const validationData = {
   inputSelector: ".popup__input",

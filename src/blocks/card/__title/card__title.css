@@ -6,4 +6,6 @@
   line-height: 29px;
   margin: 25px auto 31px 21px;
   text-overflow: ellipsis;
+  max-width: 200px;
+  word-wrap: break-word;
 }
