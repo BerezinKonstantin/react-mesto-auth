@@ -13,7 +13,7 @@ export class UserInfo {
     ).textContent;
     return this._userInfoValues;
   }
-  setUserInfo({ name, info }) {
+  setUserInfo( name, info ) {
     document.querySelector(this._userNameSelector).textContent = name;
     document.querySelector(this._userInfoSelector).textContent = info;
   }

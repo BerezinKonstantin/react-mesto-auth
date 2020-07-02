@@ -5,9 +5,7 @@ export class PopupForRemoveCard extends Popup {
     this._handler = (evt) => {
       evt.preventDefault();
       handleFormSubmit(deletedItem);
-      this.close();
     };
-    this._setEventListeners();
   }
   _setEventListeners() {
     super._setEventListeners();
@@ -20,5 +18,9 @@ export class PopupForRemoveCard extends Popup {
     this._popup
       .querySelector(".popup__content")
       .removeEventListener("submit", this._handler);
+  }
+  open() {
+    super.open();
+    this._setEventListeners();
   }
 }
