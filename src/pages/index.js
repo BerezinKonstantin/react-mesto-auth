@@ -25,10 +25,37 @@ import {
   popupForEditAvatarSelector,
   popupForRemoveCardSelector,
   editAvatarButton,
+  token,
+  myCohort,
+  basedUrl,
 } from "../utils/constants.js";
 import "./index.css";
 let initialCards;
+let cardElement;
 export let myId;
+const api = new Api(token);
+//Функция удаления лайка
+function deleteLike() {
+  api
+    .delete(`${basedUrl}/${myCohort}/cards/likes/${this._cardId}`)
+    .then((res) => {
+      this._likesNumber.textContent = res.likes.length;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+//Метод постановки лайка
+function putLike() {
+  api
+    .put(`${basedUrl}/${myCohort}/cards/likes/${this._cardId}`)
+    .then((res) => {
+      this._likesNumber.textContent = res.likes.length;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
 //Метод открытия Попапа по клику на карточку
 const handleCardClick = (item) => {
   popupWithImage.open(item);
@@ -37,12 +64,8 @@ const handlePopupForRemoveCardOpen = (event, _id) => {
   const deletedCard = event.target.parentNode;
   deletedCard._id = _id;
   function handleRemoveCardFormSubmit(deletedItem) {
-    const deleteCardApi = new Api(
-      `https://mesto.nomoreparties.co/v1/cohort-12/cards/${deletedCard._id}`,
-      "89e2c3a3-c362-4c73-9168-38bfd7349e7e"
-    );
-    deleteCardApi
-      .delete()
+    api
+      .delete(`${basedUrl}/${myCohort}/cards/${deletedCard._id}`)
       .then(() => {
         deletedItem.remove();
       })
@@ -77,25 +100,26 @@ function handleEditFormSubmit({ name, info }) {
       popupForEdit.renderLoading(false);
     });
 }
+//Функция получения элемента карточки
+function getNewCard(cardItem) {
+  const card = new Card(
+    cardItem,
+    handleCardClick,
+    handlePopupForRemoveCardOpen,
+    "#card",
+    deleteLike,
+    putLike
+  );
+  return (cardElement = card.generateCard());
+}
 //Метод отправки формы для добавления каротчки
 function handleAddCardFormSubmit(item) {
   popupForAddCard.renderLoading(true);
   //Отправка данных API
-  const postCardApi = new Api(
-    "https://mesto.nomoreparties.co/v1/cohort-12/cards",
-    "89e2c3a3-c362-4c73-9168-38bfd7349e7e"
-  );
-  postCardApi
-    .post({ name: item.name, link: item.link })
+  api
+    .post(`${basedUrl}/${myCohort}/cards`, { name: item.name, link: item.link })
     .then((result) => {
-      const card = new Card(
-        result,
-        handleCardClick,
-        handlePopupForRemoveCardOpen,
-        "#card",
-        Api
-      );
-      const cardElement = card.generateCard();
+      getNewCard(result);
       initialCards.prependItem(cardElement);
     })
     .then(() => {
@@ -111,12 +135,8 @@ function handleAddCardFormSubmit(item) {
 //Метод отправки аватара
 function handleAvatarFormSubmit(item) {
   popupForEditAvatar.renderLoading(true);
-  const avatarPatchApi = new Api(
-    "https://mesto.nomoreparties.co/v1/cohort-12/users/me/avatar",
-    "89e2c3a3-c362-4c73-9168-38bfd7349e7e"
-  );
-  avatarPatchApi
-    .patch({ avatar: item.avatar })
+  api
+    .patch(`${basedUrl}/${myCohort}/users/me/avatar`, { avatar: item.avatar })
     .then((res) => {
       avatar.src = res.avatar;
     })
@@ -180,30 +200,18 @@ const popupForAddCard = new PopupWithForm(
 );
 // Метод получения инфо о юзере
 function getUserInfo() {
-  const getUserInfoApi = new Api(
-    "https://mesto.nomoreparties.co/v1/cohort-12/users/me",
-    "89e2c3a3-c362-4c73-9168-38bfd7349e7e"
-  );
-  return getUserInfoApi.get();
+  return api.get(`${basedUrl}/${myCohort}/users/me`);
 }
 // Метод изменения инфо о юзере
 function patchUserInfo(name, info) {
-  const patchUserInfoApi = new Api(
-    "https://mesto.nomoreparties.co/v1/cohort-12/users/me",
-    "89e2c3a3-c362-4c73-9168-38bfd7349e7e"
-  );
-  return patchUserInfoApi.patch({
+  return api.patch(`${basedUrl}/${myCohort}/users/me`, {
     name: name,
     about: info,
   });
 }
 // Метод добавления 6 начальных карточек
 function getCardsApi() {
-  const cardsApi = new Api(
-    "https://mesto.nomoreparties.co/v1/cohort-12/cards",
-    "89e2c3a3-c362-4c73-9168-38bfd7349e7e"
-  );
-  return cardsApi.get();
+  return api.get(`${basedUrl}/${myCohort}/cards`);
 }
 function getCards() {
   getCardsApi()
@@ -212,14 +220,7 @@ function getCards() {
         {
           items: result,
           renderer: (item) => {
-            const card = new Card(
-              item,
-              handleCardClick,
-              handlePopupForRemoveCardOpen,
-              "#card",
-              Api
-            );
-            const cardElement = card.generateCard();
+            getNewCard(item);
             initialCards.appendItem(cardElement);
           },
         },

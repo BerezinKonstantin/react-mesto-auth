@@ -1,57 +1,56 @@
 export class Api {
-  constructor(url, id) {
-    this.url = url;
-    this.id = id;
+  constructor(token) {
+        this._token = token;
   }
-  _fetch(params) {
-    return fetch(this.url, params).then((result) => {
+  _fetch(url, params) {
+    return fetch(url, params).then((result) => {
       if (result.ok) {
         return result.json();
       }
       return Promise.reject(result.status);
     });
   }
-  get() {
-    return this._fetch({
+  get(url) {
+    return this._fetch(url, {
       method: "GET",
       headers: {
-        authorization: this.id,
+        authorization: this._token,
       },
     });
   }
-  post(body) {
-    return this._fetch({
+  post(url,body) {
+    return this._fetch(url, {
       method: "POST",
       headers: {
-        authorization: this.id,
+        authorization: this._token,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
     });
   }
-  patch(body) {
-    return this._fetch({
+  patch(url, body) {
+    return this._fetch(url, {
       method: "PATCH",
       headers: {
-        authorization: this.id,
+        authorization: this._token,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
     });
   }
-  delete() {
-    return this._fetch({
+  delete(url) {
+    return this._fetch(url, {
       method: "DELETE",
       headers: {
-        authorization: this.id,
+        authorization: this._token,
       },
     });
   }
-  put() {
-    return this._fetch({
+  put(url) {
+    return this._fetch(url, {
       method: "PUT",
       headers: {
-        authorization: this.id,
+        authorization: this._token,
       },
     });
   }

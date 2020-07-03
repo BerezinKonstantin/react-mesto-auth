@@ -5,7 +5,8 @@ export class Card {
     handleCardClick,
     handlePopupForRemoveCardOpen,
     cardSelector,
-    className
+    handleDeleteLike,
+    handlePutLike
   ) {
     this._cardSelector = cardSelector;
     this._link = item.link;
@@ -13,45 +14,16 @@ export class Card {
     this._likes = item.likes;
     this._cardOwnerId = item.owner._id;
     this._cardId = item._id;
-    this._className = className;
+    this._deleteLike = handleDeleteLike;
+    this._putLike = handlePutLike;
     //Метод переключения лайка
     this._handleLike = (event) => {
       if (!event.target.classList.contains("card__like-button_active")) {
-        this._getLike();
+        this._putLike();
       } else {
         this._deleteLike();
       }
       event.target.classList.toggle("card__like-button_active");
-    };
-    //Метод постановки лайка
-    this._getLike = () => {
-      const getLikeApi = new this._className(
-        `https://mesto.nomoreparties.co/v1/cohort-12/cards/likes/${this._cardId}`,
-        "89e2c3a3-c362-4c73-9168-38bfd7349e7e"
-      );
-      getLikeApi
-        .put()
-        .then((res) => {
-          this._likesNumber.textContent = res.likes.length;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    };
-    //Метод удаления лайка
-    this._deleteLike = () => {
-      const deleteLikeApi = new this._className(
-        `https://mesto.nomoreparties.co/v1/cohort-12/cards/likes/${this._cardId}`,
-        "89e2c3a3-c362-4c73-9168-38bfd7349e7e"
-      );
-      deleteLikeApi
-        .delete()
-        .then((res) => {
-          this._likesNumber.textContent = res.likes.length;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
     };
     this._handlePopupForRemoveCardOpen = (event) => {
       handlePopupForRemoveCardOpen(event, this._cardId);

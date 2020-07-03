@@ -12,10 +12,15 @@ export const profileDscrSelector = ".profile__description";
 export const formForEdit = document.querySelector("#form_for_edit");
 export const formForAddCard = document.querySelector("#form_for_add-card");
 export const formForEditAvatar = document.querySelector("#form_for_add-avatar");
-export const popupForEditAvatarSelector = ".popup_for_add-avatar"
-export const popupForRemoveCardSelector = ".popup_for_remove-card"
-export const editAvatarButton = document.querySelector(".profile__avatar-wrapper");
+export const popupForEditAvatarSelector = ".popup_for_add-avatar";
+export const popupForRemoveCardSelector = ".popup_for_remove-card";
+export const editAvatarButton = document.querySelector(
+  ".profile__avatar-wrapper"
+);
 export const avatar = document.querySelector(".profile__avatar");
+export const token = "89e2c3a3-c362-4c73-9168-38bfd7349e7e";
+export const myCohort = "cohort-12"
+export const basedUrl = "https://mesto.nomoreparties.co/v1"
 //Объект со значениями, передаваемыми в FormValidator
 export const validationData = {
   inputSelector: ".popup__input",
