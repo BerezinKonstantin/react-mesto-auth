@@ -18,8 +18,6 @@ function Main(props) {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
-  React.useEffect(() => {
     getCardsApi
       .get()
       .then((result) => {
@@ -29,7 +27,7 @@ function Main(props) {
         console.error(error);
       });
   }, []);
-  return (
+   return (
     <main className="content">
       <section className="profile">
         <div className="profile__avatar-wrapper" onClick={props.onEditAvatar}>

@@ -1,8 +1,10 @@
 import React from "react";
 
 function PopupWithForm(props) {
+  let isOpen
+  if (props.isOpen) { isOpen = "popup_opened"}
   return (
-    <section className={`popup popup_for_${props.name} ${props.isOpen}`}>
+    <section className={`popup popup_for_${props.name} ${isOpen}`}>
       <form
         id={`form_for_${props.name}`}
         className="popup__content"
