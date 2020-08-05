@@ -1,8 +1,10 @@
 import React from "react";
 
 function PopupWithForm(props) {
-  let isOpen
-  if (props.isOpen) { isOpen = "popup_opened"}
+  let isOpen;
+  if (props.isOpen) {
+    isOpen = "popup_opened";
+  }
   return (
     <section className={`popup popup_for_${props.name} ${isOpen}`}>
       <form
@@ -11,6 +13,7 @@ function PopupWithForm(props) {
         action="#"
         method="POST"
         noValidate
+        onSubmit={props.onSubmit}
       >
         <button
           className="popup__close-button"
@@ -20,7 +23,7 @@ function PopupWithForm(props) {
         <h2 className="popup__title">{props.title}</h2>
         <fieldset className="popup__fieldset">{props.children}</fieldset>
         <button
-          className="popup__submit-button popup__submit-button_inactive"
+          className="popup__submit-button "
           type="submit"
           defaultValue="Сохранить"
         >
