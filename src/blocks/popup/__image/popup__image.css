@@ -1,0 +1,12 @@
+.popup__image {
+  display: flex;
+  margin: auto;
+  width: auto;
+  height: auto;
+  background-size: contain;
+  max-width: 75vw;
+  max-height: 75vh;
+}
+.popup__image:hover{
+  cursor: auto;
+}
