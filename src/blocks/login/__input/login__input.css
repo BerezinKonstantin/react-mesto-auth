@@ -1,0 +1,26 @@
+.login__input {
+  color: #CCCCCC;
+  display: flex;
+  margin: 30px 0 0;
+  min-width: 358px;
+  min-height: 27px;
+  border: none;
+  background-color: black;
+  border-bottom: 2px solid #CCCCCC;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+}
+/*
+@media (max-width: 573px) {
+  .login__input {
+    min-width: 100%;
+    min-height: 24px;
+    margin: 5px 0 0;
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+*/

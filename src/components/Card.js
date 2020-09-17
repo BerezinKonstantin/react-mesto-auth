@@ -1,8 +1,8 @@
-import React from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import React, { useContext } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Card(props) {
-  const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
   // Определяем, являемся ли мы владельцем текущей карточки
   const isOwn = props.card.owner._id === currentUser._id;
   // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
@@ -19,33 +19,34 @@ function Card(props) {
   // Переменная, задающая css класс кнопки удаления, в зависимости от владения карточкой
   const cardDeleteButtonClassName = `${
     isOwn
-      ? "card__delete-button"
-      : "card__delete-button card__delete-button_hidden"
+      ? 'card__delete-button'
+      : 'card__delete-button card__delete-button_hidden'
   }`;
   // Переменная, задающая css класс кнопки лайка, в зависимости от того, поставлен ли уже лайк
   const cardLikeButtonClassName = `${
-    isLiked ? "card__like-button card__like-button_active" : "card__like-button"
+    isLiked ? 'card__like-button card__like-button_active' : 'card__like-button'
   }`;
+
   return (
-    <li className="card">
+    <li className='card'>
       <img
-        className="card__picture"
+        className='card__picture'
         src={props.card.link}
         alt={props.card.name}
         onClick={handleClick}
       />
-      <h2 className="card__title">{props.card.name}</h2>
-      <div className="card__like-wrapper">
+      <h2 className='card__title'>{props.card.name}</h2>
+      <div className='card__like-wrapper'>
         <button
           className={cardLikeButtonClassName}
-          type="button"
+          type='button'
           onClick={handleLikeClick}
         />
-        <p className="card__likes-number">{props.card.likes.length}</p>
+        <p className='card__likes-number'>{props.card.likes.length}</p>
       </div>
       <button
         className={cardDeleteButtonClassName}
-        type="button"
+        type='button'
         onClick={handleDeleteClick}
       />
     </li>

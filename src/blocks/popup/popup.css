@@ -11,6 +11,9 @@
 @import url(./__input-error-text/popup__input-error-text.css);
 @import url(./__input-error-text/_active/popup__input-error-text_active.css);
 @import url(./__input/_type/popup__input_type_error.css);
+@import url(./__info-tool-tip-icon/popup__info-tool-tip-icon.css);
+@import url(./__info-tool-tip-text/popup__info-tool-tip-text.css);
+@import url(./__info-tool-tip-content/popup__info-tool-tip-content.css);
 
 .popup {
   display: block;
