@@ -12,20 +12,11 @@ export const register = ({ password, email }) => {
       email: email,
     }),
   })
-    .then((res) => {
-      try {
-        if (res.status === 200) {
-          return res.json();
-        }
-        if (res.status === 400) {
-          throw new Error('Некорректно заполнено одно из полей');
-        }
-      } catch (err) {
-        return err;
-      }
+    .then((response) => {
+      return response.json();
     })
-    .catch((err) => {
-      console.log(err);
+    .then((res) => {
+      return res;
     });
 };
 
@@ -41,29 +32,12 @@ export const authorize = ({ password, email }) => {
       email: email,
     }),
   })
+    .then((response) => {
+      return response.json();
+    })
     .then((res) => {
-      try {
-        if (res.status === 200) {
-          return res.json();
-        }
-        if (res.status === 400) {
-          throw new Error('Некорректно заполнено одно из полей');
-        }
-        if (res.status === 401) {
-          throw new Error('Пользователь с email не найден');
-        }
-      } catch (err) {
-        return err;
-      }
-    })
-    .then((data) => {
-      if (data.token) {
-        localStorage.setItem('token', data.token);
-        return data;
-      }
-      return;
-    })
-    .catch((err) => console.log(err));
+      return res;
+    });
 };
 
 export const checkToken = (token) => {
@@ -90,5 +64,5 @@ export const checkToken = (token) => {
         return err;
       }
     })
-    .then((data) => data);
+    .then((res) => res);
 };

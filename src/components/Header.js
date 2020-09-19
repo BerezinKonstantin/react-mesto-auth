@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import headerLogo from '../pictures/logo.svg';
 
 function Header(props) {
@@ -11,9 +11,9 @@ function Header(props) {
     <header className='header'>
       <img className='logo' src={headerLogo} alt='Логотип Mesto' />
       {!props.loggedIn && (
-        <a className='header__link link' href={link}>
+        <Link className='header__link link' to={link}>
           {title}
-        </a>
+        </Link>
       )}
       {props.loggedIn && (
         <div className='header__nav'>
@@ -26,5 +26,5 @@ function Header(props) {
     </header>
   );
 }
-
+ 
 export default Header;

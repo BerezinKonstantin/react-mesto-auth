@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import LoginForm from './LoginForm';
 
 function Register(props) {
@@ -50,9 +51,9 @@ function Register(props) {
       </LoginForm>
       <div className='login__signing'>
         <p className='login__sign'>Уже зарегистрированы?&nbsp;</p>
-        <a className='login__link' href='/sign-in'>
+        <Link className='login__link' to='/sign-in'>
           Войти
-        </a>
+        </Link>
       </div>
     </section>
   );

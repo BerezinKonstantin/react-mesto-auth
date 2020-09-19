@@ -13,6 +13,8 @@ import * as Auth from '../utils/auth';
 import Register from './Register';
 import Login from './Login';
 import InfoTooltip from './InfoTooltip';
+import SucsessIcon from '../pictures/SucsessIcon.svg';
+import ErrIcon from '../pictures/ErrIcon.svg';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
@@ -24,7 +26,9 @@ function App() {
   const [cards, setCards] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  const [userEmail, setUserEmail] = useState({});
+  const [userEmail, setUserEmail] = useState();
+  const [infoText, setInfoText] = useState('');
+  const [infoIcon, setInfoIcon] = useState();
   const history = useHistory();
   const api = new Api();
   // Метод для выбора текущей карточки
@@ -70,7 +74,9 @@ function App() {
       .then((newCard) => {
         setCards([newCard, ...cards]);
       })
-      .then(handleCloseAllPopups())
+      .then(() => {
+        handleCloseAllPopups();
+      })
       .catch((error) => {
         console.error(error);
       });
@@ -103,7 +109,9 @@ function App() {
       .then((result) => {
         setCurrentUser(result);
       })
-      .then(handleCloseAllPopups())
+      .then(() => {
+        handleCloseAllPopups();
+      })
       .catch((error) => {
         console.error(error);
       });
@@ -115,7 +123,9 @@ function App() {
       .then((result) => {
         setCurrentUser(result);
       })
-      .then(handleCloseAllPopups())
+      .then(() => {
+        handleCloseAllPopups();
+      })
       .catch((error) => {
         console.error(error);
       });
@@ -134,11 +144,20 @@ function App() {
   // Авторизация пользователя
   function onLogin({ email, password }) {
     Auth.authorize({ email, password })
-      .then((data) => {
-        if (data && data.token) {
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem('token', res.token);
+          setUserEmail(email);
           handleLogin();
           history.push('/');
-          return;
+          setInfoText('Вход выполнен!');
+          setInfoIcon(SucsessIcon);
+        }
+        if (res.message) {
+          setInfoText(
+            `Что-то пошло не так! Попробуйте ещё раз. ${res.message}`
+          );
+          setInfoIcon(ErrIcon);
         }
       })
       .then(() => {
@@ -150,24 +169,37 @@ function App() {
   function onRegister({ email, password }) {
     Auth.register({ email, password })
       .then((res) => {
-        if (res.statusCode !== 400) {
+        if (res.data) {
           history.push('/sign-in');
-          return;
-        } else {
-          history.push('/sign-up');
-          return;
+          setInfoText('Вы успешно зарегистрировались!');
+          setInfoIcon(SucsessIcon);
+        }
+        if (res.error) {
+          setInfoText(`Что-то пошло не так! Попробуйте ещё раз. ${res.error}`);
+          setInfoIcon(ErrIcon);
+        }
+        if (res.message) {
+          setInfoText(
+            `Что-то пошло не так! Попробуйте ещё раз. ${res.message}`
+          );
+          setInfoIcon(ErrIcon);
         }
       })
-      .catch((err) => console.log(err));
+      .then(() => {
+        handleInfoToolTipOpen();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   // Метод проверки токена на наличие (если есть - переход на основную страницу)
   function checkToken() {
-    if (localStorage.getItem('token')) {
-      let token = localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    if (token) {
       Auth.checkToken(token).then((res) => {
         if (res) {
           setUserEmail(res.data.email);
-          setLoggedIn(true);
+          handleLogin();
           history.push('/');
         }
       });
@@ -175,7 +207,6 @@ function App() {
   }
   // Запрос на получение карточек при загрузке страницы
   useEffect(() => {
-    const api = new Api();
     api
       .getCardsApi()
       .then((result) => {
@@ -184,10 +215,10 @@ function App() {
       .catch((error) => {
         console.error(error);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // Запрос на получение информации о юзере при загрузке страницы
   useEffect(() => {
-    const api = new Api();
     api
       .getUserInfoApi()
       .then((result) => {
@@ -196,6 +227,7 @@ function App() {
       .catch((error) => {
         console.error(error);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // Проверка токена при загрузке страницы
   useEffect(() => {
@@ -249,6 +281,8 @@ function App() {
           onClose={handleCloseAllPopups}
           isOpen={isInfoToolTipOpen}
           loggedIn={loggedIn}
+          infoText={infoText}
+          infoIcon={infoIcon}
         />
       </div>
     </CurrentUserContext.Provider>
