@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
 import Header from './Header';
 import ProtectedRoute from './ProtectedRoute';
 import Main from './Main';
@@ -258,6 +258,9 @@ function App() {
           </Route>
           <Route path='/sign-in'>
             <Login onLogin={onLogin} />
+          </Route>
+          <Route>
+            {loggedIn ? <Redirect to='/' /> : <Redirect to='/sign-in' />}
           </Route>
         </Switch>
         <Footer />
