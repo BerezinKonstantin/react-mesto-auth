@@ -24,3 +24,4 @@
 
 Подключить фронтенд к серверу на express.js
 
+**[GitHub Pages](https://berezinkonstantin.github.io/react-mesto-auth/)** 
